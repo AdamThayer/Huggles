@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal">
+    <data-source name="Rails huggles: development" uuid="5edf5648-1918-468d-bfc9-e2a130dc9f09">
+      <user-name>Adam</user-name>
+      <user-password>dfdadfcbdfd9dfd9dfdddfc5dfd8dfce</user-password>
+      <schema-pattern>huggles_development.pg_catalog huggles_development.public</schema-pattern>
+      <default-schemas>huggles_development.pg_catalog huggles_development.public</default-schemas>
+    </data-source>
+    <data-source name="Rails huggles: test" uuid="3239e115-9730-4f35-95ea-40e9264bf0e4">
+      <user-name>Adam</user-name>
+      <user-password>dfdadfcbdfd9dfd9dfdddfc5dfd8dfce</user-password>
+      <schema-pattern>huggles_test.pg_catalog huggles_test.public</schema-pattern>
+      <default-schemas>huggles_test.pg_catalog huggles_test.public</default-schemas>
+    </data-source>
+  </component>
+</project>
