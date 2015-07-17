@@ -2,7 +2,35 @@ var map;
 var huggles = huggles || {}
 huggles.after_google = huggles.after_google || []
 
+function showPins(coords) {
+    $(coords).each(function(i, coord) {
+        var pos = new google.maps.LatLng(coord[1],
+            coord[0]);
+
+        var marker = new google.maps.Marker({
+            map: map,
+            position: pos
+        });
+
+        marker.setMap(map);
+
+        //map.setCenter(pos)
+    })
+}
+
 function initialize() {
+    function showOtherPins(lat, lon) {
+        $.ajax('/sync', {
+            datatype: 'script',
+            method: 'POST',
+            data: {
+                sync: {
+                    lat: lat,
+                    lon: lon}
+            }
+        })
+    }
+
     var mapOptions = {
         zoom: 17
     };
@@ -12,18 +40,30 @@ function initialize() {
     // Try HTML5 geolocation
     if(navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
-            var pos = new google.maps.LatLng(position.coords.latitude,
-                position.coords.longitude);
+            var lat = position.coords.latitude;
+            var lon = position.coords.longitude;
+
+            var pos = new google.maps.LatLng(lat,
+                lon);
 
             var marker = new google.maps.Marker({
                 map: map,
                 position: pos
-
-
             });
 
             map.setCenter(pos);
 
+            marker.setMap(map);
+
+            google.maps.event.addListener(marker, "click", function(event){
+                var lat = event.latLng.lat();
+                var lng = event.latLng.lng();
+                // populate yor box/field with lat, lng
+                alert("Lat=" + lat + "; Lng=" + lng);
+
+            });
+
+            showOtherPins(lat, lon)
 
         }, function() {
             handleNoGeolocation(true);
@@ -50,11 +90,3 @@ function handleNoGeolocation(errorFlag) {
     var infowindow = new google.maps.InfoWindow(options);
     map.setCenter(options.position);
 }
-
-huggles.after_google.push(
-    initialize
-    //function() {
-    //    google.maps.event.addDomListener(window, 'load', initialize);
-    //
-    //}
-)
