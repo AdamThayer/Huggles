@@ -8,6 +8,8 @@ Rails.application.routes.draw do
     unauthenticated :user do
       root :to => 'devise/registrations#new', as: :unauthenticated_root
     end
+
+    post 'sync', to: "sync#sync", as: :sync
   end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
