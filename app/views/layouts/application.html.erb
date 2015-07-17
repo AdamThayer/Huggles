@@ -2,14 +2,17 @@
 <html>
 <head>
   <title>Huggles</title>
-  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=false&callback=initialize" ></script>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
 
+<%= render "shared/navbar" %>
+
 <%= yield %>
+
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=false&callback=initialize" ></script>
 
 </body>
 </html>

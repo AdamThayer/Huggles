@@ -17,19 +17,12 @@ function initialize() {
 
             var marker = new google.maps.Marker({
                 map: map,
-                position: pos,
+                position: pos
+
+
             });
 
             map.setCenter(pos);
-
-            google.maps.event.addListener(marker, 'click', function(event) {
-
-                var lat = marker.getPosition().lat();
-                var lng = marker.getPosition().lng();
-
-                $('#lat').val(lat);
-                $('#lng').val(lng);
-            });
 
 
         }, function() {
