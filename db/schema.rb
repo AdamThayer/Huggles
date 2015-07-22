@@ -11,10 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150713225307) do
+ActiveRecord::Schema.define(version: 20150717171204) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "postgis"
+  enable_extension "postgis_topology"
+  enable_extension "fuzzystrmatch"
+
+  create_table "locations", force: :cascade do |t|
+    t.integer   "user_id"
+    t.geography "lonlat",     limit: {:srid=>4326, :type=>"point", :geographic=>true}
+    t.datetime  "created_at",                                                          null: false
+    t.datetime  "updated_at",                                                          null: false
+  end
+
+  add_index "locations", ["lonlat"], name: "index_locations_on_lonlat", using: :gist
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
