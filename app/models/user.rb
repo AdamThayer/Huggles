@@ -6,9 +6,9 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   def set_location sync_params
-    location = Location.new
+    location = self.location || Location.new
     location.user = self
-    location.lonlat = "POINT(#{sync_params[:lon].to_f}, #{sync_params[:lat].to_f})"
+    location.lonlat = "POINT(#{sync_params['lon'].to_f} #{sync_params['lat'].to_f})"
     location.save
 
     location

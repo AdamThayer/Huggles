@@ -1,6 +1,6 @@
 var map;
-var huggles = huggles || {}
-huggles.after_google = huggles.after_google || []
+var huggles = huggles || {};
+huggles.after_google = huggles.after_google || [];
 
 function showPins(coords) {
     $(coords).each(function(i, coord) {
@@ -12,11 +12,9 @@ function showPins(coords) {
             position: pos
         });
 
-        marker.setMap(map);
-
-        //map.setCenter(pos)
     })
 }
+
 
 function initialize() {
     function showOtherPins(lat, lon) {
@@ -38,40 +36,42 @@ function initialize() {
         mapOptions);
 
     // Try HTML5 geolocation
-    if(navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-            var lat = position.coords.latitude;
-            var lon = position.coords.longitude;
+    function updateMap() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                var lat = position.coords.latitude + Math.random() * 0.005;
+                var lon = position.coords.longitude + Math.random() * 0.005;
 
-            var pos = new google.maps.LatLng(lat,
-                lon);
+                var pos = new google.maps.LatLng(lat,
+                    lon);
 
-            var marker = new google.maps.Marker({
-                map: map,
-                position: pos
+                var marker = new google.maps.Marker({
+                    map: map,
+
+
+                });
+
+                map.setCenter(pos);
+
+                marker.setPosition(pos);
+
+
+                showOtherPins(lat, lon)
+
+            }, function () {
+                handleNoGeolocation(true);
             });
-
-            map.setCenter(pos);
-
-            marker.setMap(map);
-
-            google.maps.event.addListener(marker, "click", function(event){
-                var lat = event.latLng.lat();
-                var lng = event.latLng.lng();
-                // populate yor box/field with lat, lng
-                alert("Lat=" + lat + "; Lng=" + lng);
-
-            });
-
-            showOtherPins(lat, lon)
-
-        }, function() {
-            handleNoGeolocation(true);
-        });
-    } else {
-        // Browser doesn't support Geolocation
-        handleNoGeolocation(false);
+        } else {
+            // Browser doesn't support Geolocation
+            handleNoGeolocation(false);
+        }
     }
+
+
+    updateMap();
+
+    setInterval(updateMap, 3000000);
+
 }
 
 function handleNoGeolocation(errorFlag) {
